@@ -22,3 +22,14 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+
+    App\PaymentAdapter\PaypalPaymentAdapter:
+        tags: ['app.payment_processor']
+
+    App\PaymentAdapter\StripePaymentAdapter:
+        tags: ['app.payment_processor']
+
+    App\Payment\PaymentProcessorResolver:
+        arguments:
+            $processors: !tagged_iterator app.payment_processor

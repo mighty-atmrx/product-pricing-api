@@ -2,9 +2,9 @@
 
 namespace App\Exception;
 
-use Exception;
+use RuntimeException;
 
-class PaymentFailedException extends Exception
+class PaymentFailedException extends RuntimeException
 {
     public function __construct()
     {

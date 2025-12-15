@@ -6,6 +6,8 @@ namespace App\Service;
 
 use App\Enum\CouponTypeEnum;
 use App\Exception\CouponNotValidException;
+use App\Exception\InvalidTaxNumberException;
+use App\Exception\ProductNotFoundException;
 use App\Repository\CouponRepository;
 use App\Repository\ProductRepository;
 
@@ -18,6 +20,11 @@ readonly class PriceCalculatorService
     ){
     }
 
+    /**
+     * @throws ProductNotFoundException
+     * @throws CouponNotValidException
+     * @throws InvalidTaxNumberException
+     */
     public function calculate(array $data): float
     {
         $price = (float) $this->productRepository->getPriceById($data['product']);
