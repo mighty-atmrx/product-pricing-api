@@ -23,4 +23,24 @@ readonly class CalculatePriceDto implements \JsonSerializable
             'currency' => $this->currency
         ];
     }
+
+    public function getBasePrice(): float
+    {
+        return $this->basePrice;
+    }
+
+    public function getDiscount(): float
+    {
+        return $this->discount;
+    }
+
+    public function getTax(): float
+    {
+        return $this->tax;
+    }
+
+    public function getFinalPrice(): float
+    {
+        return $this->finalPrice;
+    }
 }

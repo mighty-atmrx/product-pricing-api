@@ -7,14 +7,13 @@ namespace App\Service;
 use App\DTO\CalculatePriceDto;
 use App\DTO\CalculatePriceInputDto;
 use App\Enum\CouponTypeEnum;
-use App\Exception\CouponNotValidException;
-use App\Exception\InvalidTaxNumberException;
-use App\Exception\ProductNotFoundException;
 use App\Interface\CouponRepositoryInterface;
 use App\Interface\ProductRepositoryInterface;
 
 readonly class PriceCalculatorService
 {
+    private const int PERCENT_DIVISOR = 100;
+
     public function __construct(
         private ProductRepositoryInterface $productRepository,
         private CouponRepositoryInterface $couponRepository,
@@ -48,7 +47,7 @@ readonly class PriceCalculatorService
 
     private function getPercentDiscount(float $basePrice, float $couponValue): float
     {
-        return ($basePrice * $couponValue) / 100;
+        return ($basePrice * $couponValue) / self::PERCENT_DIVISOR;
     }
 
     private function calculateTax(float $price, float $taxRate): float

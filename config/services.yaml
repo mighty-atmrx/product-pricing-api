@@ -23,11 +23,16 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    Systemeio\TestForCandidates\PaymentProcessor\PaypalPaymentProcessor:
+        class: Systemeio\TestForCandidates\PaymentProcessor\PaypalPaymentProcessor
 
-    App\PaymentAdapter\PaypalPaymentAdapter:
+    Systemeio\TestForCandidates\PaymentProcessor\StripePaymentProcessor:
+        class: Systemeio\TestForCandidates\PaymentProcessor\StripePaymentProcessor
+
+    App\Payment\PaypalPaymentAdapter:
         tags: ['app.payment_processor']
 
-    App\PaymentAdapter\StripePaymentAdapter:
+    App\Payment\StripePaymentAdapter:
         tags: ['app.payment_processor']
 
     App\Payment\PaymentProcessorResolver:
