@@ -15,8 +15,23 @@ final class CalculatePriceRequest
     #[Assert\NotBlank(message: ValidationErrorMessageEnum::TAX_NUMBER_MANDATORY->value)]
     #[Assert\Type('string', message: ValidationErrorMessageEnum::TAX_NUMBER_MUST_BE_A_STRING->value)]
     #[Assert\Regex(pattern: '/^(DE\d{9}|IT\d{11}|GR\d{9}|FR[A-Z]{2}\d{9})$/', message: ValidationErrorMessageEnum::INVALID_TAX_NUMBER_PATTERN->value)]
-    private ?string $taxNumber = null;
+    public ?string $taxNumber = null;
 
     #[Assert\Type('string', message: ValidationErrorMessageEnum::COUPON_CODE_MUST_BE_A_STRING->value)]
-    private ?string $couponCode = null;
+    public ?string $couponCode = null;
+
+    public function getProduct(): ?int
+    {
+        return $this->product;
+    }
+
+    public function getTaxNumber(): ?string
+    {
+        return $this->taxNumber;
+    }
+
+    public function getCouponCode(): ?string
+    {
+        return $this->couponCode;
+    }
 }

@@ -33,3 +33,5 @@ services:
     App\Payment\PaymentProcessorResolver:
         arguments:
             $processors: !tagged_iterator app.payment_processor
+
+    App\Repository\CouponRepositoryInterface: '@App\Repository\Doctrine\CouponRepository'
