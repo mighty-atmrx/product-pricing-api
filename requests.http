@@ -1,4 +1,5 @@
-### Calculate Price
+### ==== CALCULATE PRICE ====
+### Calculate Price With Active Percent Coupon Success
 POST http://127.0.0.1:8337/calculate-price
 Accept: application/json
 Content-Type: application/json
@@ -6,17 +7,173 @@ Content-Type: application/json
 {
   "product": 1,
   "taxNumber": "DE123456789",
-  "couponCode": "D15"
+  "couponCode": "D10"
 }
 
-### Execute Purchase
+### Calculate Price With Active Fixed Coupon Success
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "DE123456789",
+  "couponCode": "D25"
+}
+
+### Calculate Price With Not Active Percent Coupon Failed
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "DE123456789",
+  "couponCode": "D5"
+}
+
+### Calculate Price With Not Active Fixed Coupon Failed
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "DE123456789",
+  "couponCode": "D30"
+}
+
+### Calculate Price With Invalid TaxNumber Failed
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "MD123456789",
+  "couponCode": "D10"
+}
+
+
+### ==== PAYPAL PURCHASE ====
+### Paypal Success Purchase With Percent CouponType
 POST http://127.0.0.1:8337/purchase
 Accept: application/json
 Content-Type: application/json
 
 {
   "product": 1,
-  "taxNumber": "IT12345678900",
-  "couponCode": "D15",
+  "taxNumber": "DE123456789",
+  "couponCode": "D10",
   "paymentProcessor": "paypal"
+}
+
+### Paypal Success Purchase With Fixed CouponType
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "DE123456789",
+  "couponCode": "D25",
+  "paymentProcessor": "paypal"
+}
+
+### Paypal Failed Purchase With Non Existent Percent Coupon
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "DE123456789",
+  "couponCode": "D5",
+  "paymentProcessor": "paypal"
+}
+
+### Paypal Failed Purchase With Non Existent Fixed CouponType
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "DE123456789",
+  "couponCode": "D30",
+  "paymentProcessor": "paypal"
+}
+
+### Paypal Failed Purchase, price too high (logic from PayPalPaymentProcessor)
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 2,
+  "taxNumber": "DE123456789",
+  "couponCode": "D25",
+  "paymentProcessor": "paypal"
+}
+
+
+### ==== STRIPE PURCHASE ====
+### Stripe Success Purchase With Percent CouponType
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 2,
+  "taxNumber": "DE123456789",
+  "couponCode": "D10",
+  "paymentProcessor": "stripe"
+}
+
+### Stripe Success Purchase With Fixed CouponType
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 2,
+  "taxNumber": "DE123456789",
+  "couponCode": "D25",
+  "paymentProcessor": "stripe"
+}
+
+### Stripe Failed Purchase With Non Existent Percent Coupon
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 2,
+  "taxNumber": "DE123456789",
+  "couponCode": "D5",
+  "paymentProcessor": "stripe"
+}
+
+### Stripe Failed Purchase With Non Existent Fixed CouponType
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 2,
+  "taxNumber": "DE123456789",
+  "couponCode": "D30",
+  "paymentProcessor": "stripe"
+}
+
+### Stripe Failed Purchase, price too low(logic from StripePaymentProcessor)
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "DE123456789",
+  "couponCode": "D25",
+  "paymentProcessor": "stripe"
 }
