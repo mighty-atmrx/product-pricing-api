@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\DTO\CalculatePriceInputDto;
+use App\DTO\Request\CalculatePriceRequest;
 use App\Service\PriceCalculatorService;
-use App\Validator\CalculatePriceRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

@@ -7,11 +7,11 @@ namespace App\Tests;
 use App\DTO\CalculatePriceDto;
 use App\DTO\CalculatePriceInputDto;
 use App\Enum\PaymentProcessorType;
-use App\Interface\PaymentProcessorInterface;
+use App\Service\Payment\PaymentAdapterInterface;
+use App\Service\Payment\PaymentProcessorResolver;
 use PHPUnit\Framework\TestCase;
 use App\Service\PaymentService;
 use App\Service\PriceCalculatorService;
-use App\Payment\PaymentProcessorResolver;
 use Psr\Log\NullLogger;
 
 class PaymentServiceTest extends TestCase
@@ -21,7 +21,7 @@ class PaymentServiceTest extends TestCase
         $logger = new NullLogger();
         $resolver = $this->createMock(PaymentProcessorResolver::class);
         $calculator = $this->createMock(PriceCalculatorService::class);
-        $processor = $this->createMock(PaymentProcessorInterface::class);
+        $processor = $this->createMock(PaymentAdapterInterface::class);
 
         $calculator->expects($this->once())
             ->method('calculate')

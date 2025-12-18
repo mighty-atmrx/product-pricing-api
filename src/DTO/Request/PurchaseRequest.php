@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Validator;
+namespace App\DTO\Request;
 
 use App\Enum\PaymentProcessorType;
 use App\Enum\ValidationErrorMessageEnum;

@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Payment;
+namespace App\Service\Payment;
 
 use App\Enum\PaymentProcessorType;
 use App\Exception\PaymentProcessorNotFoundException;
-use App\Interface\PaymentProcessorInterface;
 
 readonly class PaymentProcessorResolver
 {
     /**
-     * @param iterable<PaymentProcessorInterface> $processors
+     * @param iterable<PaymentAdapterInterface> $processors
      */
     public function __construct(
         private iterable $processors
@@ -21,7 +20,7 @@ readonly class PaymentProcessorResolver
     /**
      * @throws PaymentProcessorNotFoundException
      */
-    public function getProcessor(PaymentProcessorType $processorType): PaymentProcessorInterface
+    public function getProcessor(PaymentProcessorType $processorType): PaymentAdapterInterface
     {
         foreach ($this->processors as $processor) {
             if ($processor->supports($processorType)) {

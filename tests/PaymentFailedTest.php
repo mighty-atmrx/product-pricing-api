@@ -6,8 +6,8 @@ use App\DTO\CalculatePriceDto;
 use App\DTO\CalculatePriceInputDto;
 use App\Enum\PaymentProcessorType;
 use App\Exception\PaymentFailedException;
-use App\Interface\PaymentProcessorInterface;
-use App\Payment\PaymentProcessorResolver;
+use App\Service\Payment\PaymentAdapterInterface;
+use App\Service\Payment\PaymentProcessorResolver;
 use App\Service\PaymentService;
 use App\Service\PriceCalculatorService;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
@@ -24,7 +24,7 @@ class PaymentFailedTest extends TestCase
         $logger = $this->createMock(LoggerInterface::class);
         $resolver = $this->createMock(PaymentProcessorResolver::class);
         $calculator = $this->createMock(PriceCalculatorService::class);
-        $processor = $this->createMock(PaymentProcessorInterface::class);
+        $processor = $this->createMock(PaymentAdapterInterface::class);
 
         $calculator->method('calculate')
             ->willReturn(new CalculatePriceDto(

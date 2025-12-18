@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Payment;
+namespace App\Service\Payment;
 
 use App\Enum\PaymentProcessorType;
 use App\Exception\PaymentFailedException;
-use App\Interface\PaymentProcessorInterface;
 use Systemeio\TestForCandidates\PaymentProcessor\StripePaymentProcessor;
 
-readonly class StripePaymentAdapter implements PaymentProcessorInterface
+readonly class StripePaymentAdapter implements PaymentAdapterInterface
 {
     public function __construct(
         private StripePaymentProcessor $paymentProcessor,

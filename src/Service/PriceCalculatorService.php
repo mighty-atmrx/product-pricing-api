@@ -7,8 +7,9 @@ namespace App\Service;
 use App\DTO\CalculatePriceDto;
 use App\DTO\CalculatePriceInputDto;
 use App\Enum\CouponTypeEnum;
-use App\Interface\CouponRepositoryInterface;
-use App\Interface\ProductRepositoryInterface;
+use App\Enum\CurrencyEnum;
+use App\Repository\CouponRepositoryInterface;
+use App\Repository\ProductRepositoryInterface;
 
 readonly class PriceCalculatorService
 {
@@ -27,10 +28,10 @@ readonly class PriceCalculatorService
 
         $discount  = 0;
         if (!empty($dto->couponCode)) {
-            $coupon = $this->couponRepository->getByCode($dto->couponCode);
+            $coupon = $this->couponRepository->getByCodeActive($dto->couponCode);
             if ($coupon->isActive()) {
                 if ($coupon->getType() === CouponTypeEnum::FIXED->value) {
-                    $discount = $coupon['value'];
+                    $discount = $coupon->getValue();
                 } elseif ($coupon->getType() === CouponTypeEnum::PERCENT->value) {
                     $discount = $this->getPercentDiscount($basePrice, $coupon->getValue());
                 }
@@ -42,7 +43,7 @@ readonly class PriceCalculatorService
         $taxRate = $this->taxNumberService->getTaxRate($dto->taxNumber);
         $tax = $this->calculateTax($priceDiscount, $taxRate);
         $finalPrice = round($priceDiscount + $tax, 2);
-        return new CalculatePriceDto($basePrice, $discount, $tax, $finalPrice);
+        return new CalculatePriceDto($basePrice, $discount, $tax, $finalPrice, CurrencyEnum::EUR);
     }
 
     private function getPercentDiscount(float $basePrice, float $couponValue): float

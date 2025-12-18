@@ -12,8 +12,8 @@ class ProductFixtures extends Fixture
     {
         $products = [
             ['name' => 'Iphone', 'price' => '100.00'],
-            ['name' => 'Наушники', 'price' => '20.00'],
-            ['name' => 'Чехол', 'price' => '10.00'],
+            ['name' => 'Наушники', 'price' => '1100.00'],
+            ['name' => 'Чехол', 'price' => '500.00'],
         ];
 
         foreach ($products as $productData) {

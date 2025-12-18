@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Interface;
+namespace App\Service\Payment;
 
 use App\Enum\PaymentProcessorType;
 use App\Exception\PaymentFailedException;
 
-interface PaymentProcessorInterface
+interface PaymentAdapterInterface
 {
     /**
      * @throws PaymentFailedException

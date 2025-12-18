@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Payment;
+namespace App\Service\Payment;
 
 use App\Enum\PaymentProcessorType;
 use App\Exception\PaymentFailedException;
-use App\Interface\PaymentProcessorInterface;
 use Systemeio\TestForCandidates\PaymentProcessor\PaypalPaymentProcessor;
 use Throwable;
 
-readonly class PaypalPaymentAdapter implements PaymentProcessorInterface
+readonly class PaypalPaymentAdapter implements PaymentAdapterInterface
 {
     public function __construct(
         private PaypalPaymentProcessor $paymentProcessor,

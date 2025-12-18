@@ -6,8 +6,8 @@ namespace App\Tests;
 
 use App\Enum\PaymentProcessorType;
 use App\Exception\PaymentProcessorNotFoundException;
-use App\Interface\PaymentProcessorInterface;
-use App\Payment\PaymentProcessorResolver;
+use App\Service\Payment\PaymentAdapterInterface;
+use App\Service\Payment\PaymentProcessorResolver;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 
@@ -16,8 +16,8 @@ class PaymentProcessorResolverTest extends TestCase
 {
     public function testReturnsCorrectProcessor(): void
     {
-        $paypal = $this->createMock(PaymentProcessorInterface::class);
-        $stripe = $this->createMock(PaymentProcessorInterface::class);
+        $paypal = $this->createMock(PaymentAdapterInterface::class);
+        $stripe = $this->createMock(PaymentAdapterInterface::class);
 
         $paypal->method('supports')
             ->with(PaymentProcessorType::PAYPAL)
@@ -36,7 +36,7 @@ class PaymentProcessorResolverTest extends TestCase
 
     public function testThrowsExceptionWhenProcessorNotFound(): void
     {
-        $processor = $this->createMock(PaymentProcessorInterface::class);
+        $processor = $this->createMock(PaymentAdapterInterface::class);
 
         $processor->method('supports')
             ->willReturn(false);

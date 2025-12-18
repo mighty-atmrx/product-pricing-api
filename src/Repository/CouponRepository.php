@@ -6,7 +6,6 @@ namespace App\Repository;
 
 use App\Entity\Coupon;
 use App\Exception\CouponNotFoundException;
-use App\Interface\CouponRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,9 +19,9 @@ class CouponRepository extends ServiceEntityRepository implements CouponReposito
         parent::__construct($registry, Coupon::class);
     }
 
-    public function getByCode(string $code): Coupon
+    public function getByCodeActive(string $code): Coupon
     {
-        $coupon = $this->findOneBy(['code' => $code]);
+        $coupon = $this->findOneBy(['code' => $code, 'isActive' => true]);
 
         if (!$coupon) {
             throw new CouponNotFoundException();

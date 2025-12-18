@@ -2,6 +2,8 @@
 
 namespace App\DTO;
 
+use App\Enum\CurrencyEnum;
+
 readonly class CalculatePriceDto implements \JsonSerializable
 {
     public function __construct(
@@ -9,7 +11,7 @@ readonly class CalculatePriceDto implements \JsonSerializable
         private float $discount,
         private float $tax,
         private float $finalPrice,
-        private string $currency = 'EUR'
+        private CurrencyEnum $currency = CurrencyEnum::EUR
     ){
     }
 
@@ -20,7 +22,7 @@ readonly class CalculatePriceDto implements \JsonSerializable
             'discount' => $this->discount,
             'tax' => $this->tax,
             'finalPrice' => $this->finalPrice,
-            'currency' => $this->currency
+            'currency' => $this->currency->value
         ];
     }
 

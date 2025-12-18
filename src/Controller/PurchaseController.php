@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\DTO\CalculatePriceInputDto;
+use App\DTO\Request\PurchaseRequest;
 use App\Service\PaymentService;
-use App\Validator\PurchaseRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,6 +28,6 @@ final class PurchaseController extends AbstractController
         );
 
         $this->service->payment($request->getPaymentProcessorAsEnum(), $dto);
-        return $this->json('Purchase successful', Response::HTTP_OK);
+        return $this->json(['message' => 'Purchase successful'], Response::HTTP_OK);
     }
 }

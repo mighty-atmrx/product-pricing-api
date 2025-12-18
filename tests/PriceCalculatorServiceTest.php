@@ -5,8 +5,8 @@ namespace App\Tests;
 use App\DTO\CalculatePriceInputDto;
 use App\Entity\Coupon;
 use App\Enum\CouponTypeEnum;
-use App\Interface\CouponRepositoryInterface;
-use App\Interface\ProductRepositoryInterface;
+use App\Repository\CouponRepositoryInterface;
+use App\Repository\ProductRepositoryInterface;
 use App\Service\PriceCalculatorService;
 use App\Service\TaxNumberService;
 use PHPUnit\Framework\TestCase;
@@ -44,7 +44,7 @@ class PriceCalculatorServiceTest extends TestCase
         $coupon->setValue(10);
 
         $productRepo->method('getPriceById')->willReturn(100.00);
-        $couponRepo->method('getByCode')->willReturn($coupon);
+        $couponRepo->method('getByCodeActive')->willReturn($coupon);
         $taxService->method('getTaxRate')->willReturn(0.20);
 
         $service = new PriceCalculatorService(

@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Product;
 use App\Exception\ProductNotFoundException;
-use App\Interface\ProductRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

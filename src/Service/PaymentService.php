@@ -8,7 +8,7 @@ use App\DTO\CalculatePriceInputDto;
 use App\Enum\PaymentProcessorType;
 use App\Exception\PaymentFailedException;
 use App\Exception\PaymentProcessorNotFoundException;
-use App\Payment\PaymentProcessorResolver;
+use App\Service\Payment\PaymentProcessorResolver;
 use Psr\Log\LoggerInterface;
 
 readonly class PaymentService
@@ -37,7 +37,7 @@ readonly class PaymentService
         } catch (PaymentProcessorNotFoundException $e) {
             $this->logger->error('Payment processor not found', ['processorType' => $processorType->value]);
             throw $e;
-        }catch (PaymentFailedException $e) {
+        } catch (PaymentFailedException $e) {
             $this->logger->error('Payment failed', ['processorType' => $processorType->value, 'amount' => $price, 'error' => $e]);
             throw $e;
         }

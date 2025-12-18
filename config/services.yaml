@@ -29,14 +29,14 @@ services:
     Systemeio\TestForCandidates\PaymentProcessor\StripePaymentProcessor:
         class: Systemeio\TestForCandidates\PaymentProcessor\StripePaymentProcessor
 
-    App\Payment\PaypalPaymentAdapter:
+    App\Service\Payment\PaypalPaymentAdapter:
         tags: ['app.payment_processor']
 
-    App\Payment\StripePaymentAdapter:
+    App\Service\Payment\StripePaymentAdapter:
         tags: ['app.payment_processor']
 
-    App\Payment\PaymentProcessorResolver:
+    App\Service\Payment\PaymentProcessorResolver:
         arguments:
             $processors: !tagged_iterator app.payment_processor
 
-    App\Repository\CouponRepositoryInterface: '@App\Repository\Doctrine\CouponRepository'
+    App\Repository\CouponRepositoryInterface: '@App\Repository\CouponRepository'
