@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\DTO\CalculatePriceInputDto;
+use App\DTO\PriceInputDto;
 use App\Enum\PaymentProcessorType;
+use App\Enum\PaymentProcessorTypeEnum;
 use App\Exception\PaymentFailedException;
 use App\Exception\PaymentProcessorNotFoundException;
 use App\Service\Payment\PaymentProcessorResolver;
@@ -24,7 +25,7 @@ readonly class PaymentService
      * @throws PaymentProcessorNotFoundException
      * @throws PaymentFailedException
      */
-    public function payment(PaymentProcessorType $processorType, CalculatePriceInputDto $dto): void
+    public function processPayment(PaymentProcessorTypeEnum $processorType, PriceInputDto $dto): void
     {
         $priceDto = $this->priceCalculatorService->calculate($dto);
         $price = $priceDto->getFinalPrice();

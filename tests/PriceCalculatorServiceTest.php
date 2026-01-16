@@ -2,14 +2,15 @@
 
 namespace App\Tests;
 
-use App\DTO\CalculatePriceInputDto;
+use App\DTO\PriceInputDto;
 use App\Entity\Coupon;
+use App\Entity\Product;
 use App\Enum\CouponTypeEnum;
 use App\Repository\CouponRepositoryInterface;
 use App\Repository\ProductRepositoryInterface;
+use PHPUnit\Framework\TestCase;
 use App\Service\PriceCalculatorService;
 use App\Service\TaxNumberService;
-use PHPUnit\Framework\TestCase;
 
 class PriceCalculatorServiceTest extends TestCase
 {
@@ -19,12 +20,15 @@ class PriceCalculatorServiceTest extends TestCase
         $couponRepo  = $this->createStub(CouponRepositoryInterface::class);
         $taxService  = $this->createStub(TaxNumberService::class);
 
-        $productRepo->method('getPriceById')->willReturn(100.00);
+        $product = new Product();
+        $product->setPrice(100.00);
+
+        $productRepo->method('getById')->willReturn($product);
         $taxService->method('getTaxRate')->willReturn(0.20);
 
         $service = new PriceCalculatorService($productRepo, $couponRepo, $taxService);
 
-        $result = $service->calculate(new CalculatePriceInputDto(1, 'DE123456789', null));
+        $result = $service->calculate(new PriceInputDto(1, 'DE123456789', null));
 
         $this->assertSame(100.00, $result->getBasePrice());
         $this->assertSame(0.0, $result->getDiscount());
@@ -40,10 +44,13 @@ class PriceCalculatorServiceTest extends TestCase
 
         $coupon = new Coupon();
         $coupon->setIsActive(true);
-        $coupon->setType(CouponTypeEnum::PERCENT->value);
+        $coupon->setType(CouponTypeEnum::PERCENT);
         $coupon->setValue(10);
 
-        $productRepo->method('getPriceById')->willReturn(100.00);
+        $product = new Product();
+        $product->setPrice(100.00);
+
+        $productRepo->method('getById')->willReturn($product);
         $couponRepo->method('getByCodeActive')->willReturn($coupon);
         $taxService->method('getTaxRate')->willReturn(0.20);
 
@@ -54,7 +61,7 @@ class PriceCalculatorServiceTest extends TestCase
         );
 
         $result = $service->calculate(
-            new CalculatePriceInputDto(1, 'DE123456789', 'PROMO10')
+            new PriceInputDto(1, 'DE123456789', 'PROMO10')
         );
 
         $this->assertSame(100.00, $result->getBasePrice());

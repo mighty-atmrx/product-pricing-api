@@ -4,7 +4,7 @@ namespace App\Enum;
 
 use App\Exception\InvalidTaxNumberException;
 
-enum Country: string
+enum CountryEnum: string
 {
     case DE = 'DE';
     case IT = 'IT';

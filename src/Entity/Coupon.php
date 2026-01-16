@@ -20,10 +20,10 @@ class Coupon
     #[Assert\Length(max: 50)]
     private string $code;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', enumType: CouponTypeEnum::class)]
     #[Assert\NotBlank]
     #[Assert\Choice(choices: [CouponTypeEnum::FIXED, CouponTypeEnum::PERCENT])]
-    private string $type;
+    private CouponTypeEnum $type;
 
     #[ORM\Column(type: 'integer')]
     #[Assert\PositiveOrZero]
@@ -50,10 +50,10 @@ class Coupon
 
     public function getType(): string
     {
-        return $this->type;
+        return $this->type->value;
     }
 
-    public function setType(string $type): self
+    public function setType(CouponTypeEnum $type): self
     {
         $this->type = $type;
         return $this;

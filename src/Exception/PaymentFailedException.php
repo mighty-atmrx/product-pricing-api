@@ -2,12 +2,17 @@
 
 namespace App\Exception;
 
-use RuntimeException;
+use Symfony\Component\HttpFoundation\Response;
 
-class PaymentFailedException extends RuntimeException
+class PaymentFailedException extends ApiException
 {
-    public function __construct()
+    public function getErrorMessage(): string
     {
-        parent::__construct('payment_failed');
+        return 'Payment failed';
+    }
+
+    public function getStatusCode(): int
+    {
+        return Response::HTTP_UNPROCESSABLE_ENTITY;
     }
 }

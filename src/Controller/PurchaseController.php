@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\DTO\CalculatePriceInputDto;
+use App\DTO\PriceInputDto;
 use App\DTO\Request\PurchaseRequest;
 use App\Service\PaymentService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,13 +21,13 @@ final class PurchaseController extends AbstractController
     #[Route('/purchase', name: 'app_purchase', methods: ['POST'])]
     public function index(#[MapRequestPayload] PurchaseRequest $request): JsonResponse
     {
-        $dto = new CalculatePriceInputDto(
-            productId: $request->getProduct(),
-            taxNumber: $request->getTaxNumber(),
-            couponCode: $request->getCouponCode(),
+        $dto = new PriceInputDto(
+            productId: is_numeric($request->price->product) ? (int) $request->price->product : null,
+            taxNumber: $request->price->taxNumber,
+            couponCode: $request->price->couponCode,
         );
 
-        $this->service->payment($request->getPaymentProcessorAsEnum(), $dto);
+        $this->service->processPayment($request->getPaymentProcessorAsEnum(), $dto);
         return $this->json(['message' => 'Purchase successful'], Response::HTTP_OK);
     }
 }

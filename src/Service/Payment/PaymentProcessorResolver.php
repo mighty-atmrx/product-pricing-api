@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Payment;
 
 use App\Enum\PaymentProcessorType;
+use App\Enum\PaymentProcessorTypeEnum;
 use App\Exception\PaymentProcessorNotFoundException;
 
 readonly class PaymentProcessorResolver
@@ -20,7 +21,7 @@ readonly class PaymentProcessorResolver
     /**
      * @throws PaymentProcessorNotFoundException
      */
-    public function getProcessor(PaymentProcessorType $processorType): PaymentAdapterInterface
+    public function getProcessor(PaymentProcessorTypeEnum $processorType): PaymentAdapterInterface
     {
         foreach ($this->processors as $processor) {
             if ($processor->supports($processorType)) {

@@ -2,12 +2,17 @@
 
 namespace App\Exception;
 
-use Exception;
+use Symfony\Component\HttpFoundation\Response;
 
-class PaymentProcessorNotFoundException extends Exception
+class PaymentProcessorNotFoundException extends ApiException
 {
-    public function __construct()
+    public function getErrorMessage(): string
     {
-        parent::__construct('payment_processor_not_found');
+        return 'Payment processor not found';
+    }
+
+    public function getStatusCode(): int
+    {
+        return Response::HTTP_NOT_FOUND;
     }
 }

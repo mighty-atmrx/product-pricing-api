@@ -2,12 +2,17 @@
 
 namespace App\Exception;
 
-use Exception;
+use Symfony\Component\HttpFoundation\Response;
 
-class ProductNotFoundException extends Exception
+class ProductNotFoundException extends ApiException
 {
-    public function __construct()
+    public function getErrorMessage(): string
     {
-        parent::__construct('product_not_found');
+        return 'Product not found';
+    }
+
+    public function getStatusCode(): int
+    {
+        return Response::HTTP_NOT_FOUND;
     }
 }

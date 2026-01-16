@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\DTO\CalculatePriceInputDto;
+use App\DTO\PriceInputDto;
 use App\DTO\Request\CalculatePriceRequest;
 use App\Service\PriceCalculatorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,10 +23,10 @@ final class PriceController extends AbstractController
     #[Route('/calculate-price', name: 'app_price', methods: ['POST'])]
     public function index(#[MapRequestPayload] CalculatePriceRequest $request): JsonResponse
     {
-        $dto = new CalculatePriceInputDto(
-            productId: $request->getProduct(),
-            taxNumber: $request->getTaxNumber(),
-            couponCode: $request->getCouponCode(),
+        $dto = new PriceInputDto(
+            productId: (int) $request->price->product,
+            taxNumber: $request->price->taxNumber,
+            couponCode: $request->price->couponCode,
         );
 
         $result = $this->service->calculate($dto);

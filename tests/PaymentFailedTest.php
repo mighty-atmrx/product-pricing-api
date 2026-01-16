@@ -3,16 +3,16 @@
 namespace App\Tests;
 
 use App\DTO\CalculatePriceDto;
-use App\DTO\CalculatePriceInputDto;
-use App\Enum\PaymentProcessorType;
+use App\DTO\PriceInputDto;
+use App\Enum\PaymentProcessorTypeEnum;
 use App\Exception\PaymentFailedException;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use App\Service\Payment\PaymentAdapterInterface;
 use App\Service\Payment\PaymentProcessorResolver;
 use App\Service\PaymentService;
 use App\Service\PriceCalculatorService;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
 #[AllowMockObjectsWithoutExpectations]
 class PaymentFailedTest extends TestCase
@@ -35,7 +35,7 @@ class PaymentFailedTest extends TestCase
             ));
 
         $resolver->method('getProcessor')
-            ->with(PaymentProcessorType::PAYPAL)
+            ->with(PaymentProcessorTypeEnum::PAYPAL)
             ->willReturn($processor);
 
         $processor->method('pay')
@@ -44,9 +44,9 @@ class PaymentFailedTest extends TestCase
 
         $service = new PaymentService($logger, $resolver, $calculator);
 
-        $service->payment(
-            PaymentProcessorType::PAYPAL,
-            new CalculatePriceInputDto(1, 'DE123456789', null)
+        $service->processPayment(
+            PaymentProcessorTypeEnum::PAYPAL,
+            new PriceInputDto(1, 'DE123456789', null)
         );
     }
 }

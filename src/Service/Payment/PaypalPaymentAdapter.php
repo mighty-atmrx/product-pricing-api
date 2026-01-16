@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Payment;
 
-use App\Enum\PaymentProcessorType;
+use App\Enum\PaymentProcessorTypeEnum;
 use App\Exception\PaymentFailedException;
 use Systemeio\TestForCandidates\PaymentProcessor\PaypalPaymentProcessor;
 use Throwable;
@@ -26,8 +26,8 @@ readonly class PaypalPaymentAdapter implements PaymentAdapterInterface
         }
     }
 
-    public function supports(PaymentProcessorType $processorType): bool
+    public function supports(PaymentProcessorTypeEnum $processorType): bool
     {
-        return $processorType === PaymentProcessorType::PAYPAL;
+        return $processorType === PaymentProcessorTypeEnum::PAYPAL;
     }
 }

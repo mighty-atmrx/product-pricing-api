@@ -8,6 +8,7 @@ use App\Entity\Coupon;
 use App\Exception\CouponNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use mysql_xdevapi\Exception;
 
 /**
  * @extends ServiceEntityRepository<Coupon>

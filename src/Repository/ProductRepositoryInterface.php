@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Entity\Product;
+
 interface ProductRepositoryInterface
 {
-    public function getPriceById(int $productId): float;
+    public function getById(int $productId): Product;
 }

@@ -9,9 +9,6 @@ enum ValidationErrorMessageEnum: string
     case PRODUCT_ID_MUST_BE_A_POSITIVE_INTEGER = 'product_id_must_be_a_positive_integer';
 
     case TAX_NUMBER_MANDATORY = 'tax_number_is_mandatory';
-    case TAX_NUMBER_MUST_BE_A_STRING = 'tax_number_must_be_a_string';
-
-    case COUPON_CODE_MUST_BE_A_STRING = 'coupon_code_must_be_a_string';
 
     case PAYMENT_PROCESSOR_MANDATORY = 'payment_processor_mandatory';
     case PAYMENT_PROCESSOR_MUST_BE_A_STRING = 'payment_processor_must_be_a_string';

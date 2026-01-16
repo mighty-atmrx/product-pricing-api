@@ -14,13 +14,13 @@ class ProductRepository extends ServiceEntityRepository implements ProductReposi
         parent::__construct($registry, Product::class);
     }
 
-    public function getPriceById(int $productId): float
+    public function getById(int $productId): Product
     {
         $product = $this->findOneBy(['id' => $productId]);
         if (!$product) {
             throw new ProductNotFoundException();
         }
 
-        return $product->getPrice();
+        return $product;
     }
 }

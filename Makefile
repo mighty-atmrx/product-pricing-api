@@ -4,13 +4,13 @@ DC = @USER_ID=$(USER_ID) docker compose
 DC_RUN = ${DC} run --rm sio_test
 DC_EXEC = ${DC} exec sio_test
 
-PHONY: help
+.PHONY: help init build up stop start down restart console install reset-db success-message
 .DEFAULT_GOAL := help
 
 help: ## This help.
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-init: down build install up success-message console ## Initialize environment
+init: down build install up db-init success-message ## Initialize environment
 
 build: ## Build services.
 	${DC} build $(c)
@@ -34,6 +34,17 @@ console: ## Login in console.
 
 install: ## Install dependencies without running the whole application.
 	${DC_RUN} composer install
+
+db-init: ## Init database (migrations + fixtures)
+	${DC_EXEC} php bin/console doctrine:database:create --if-not-exists
+	${DC_EXEC} php bin/console doctrine:migrations:migrate --no-interaction
+	${DC_EXEC} php bin/console doctrine:fixtures:load --no-interaction
+
+reset-db: ## Drop and recreate database
+	${DC_EXEC} php bin/console doctrine:database:drop --force --if-exists
+	${DC_EXEC} php bin/console doctrine:database:create
+	${DC_EXEC} php bin/console doctrine:migrations:migrate --no-interaction
+	${DC_EXEC} php bin/console doctrine:fixtures:load --no-interaction
 
 success-message:
 	@echo "You can now access the application at http://localhost:8337"

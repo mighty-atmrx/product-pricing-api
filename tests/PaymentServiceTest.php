@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Tests;
 
 use App\DTO\CalculatePriceDto;
-use App\DTO\CalculatePriceInputDto;
-use App\Enum\PaymentProcessorType;
+use App\DTO\PriceInputDto;
+use App\Enum\PaymentProcessorTypeEnum;
+use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 use App\Service\Payment\PaymentAdapterInterface;
 use App\Service\Payment\PaymentProcessorResolver;
-use PHPUnit\Framework\TestCase;
 use App\Service\PaymentService;
 use App\Service\PriceCalculatorService;
-use Psr\Log\NullLogger;
 
 class PaymentServiceTest extends TestCase
 {
@@ -34,7 +34,7 @@ class PaymentServiceTest extends TestCase
 
         $resolver->expects($this->once())
             ->method('getProcessor')
-            ->with(PaymentProcessorType::PAYPAL)
+            ->with(PaymentProcessorTypeEnum::PAYPAL)
             ->willReturn($processor);
 
         $processor->expects($this->once())
@@ -47,13 +47,13 @@ class PaymentServiceTest extends TestCase
             priceCalculatorService: $calculator
         );
 
-        $dto = new CalculatePriceInputDto(
+        $dto = new PriceInputDto(
             productId: 1,
             taxNumber: 'DE123456789',
             couponCode: null
         );
 
-        $service->payment(PaymentProcessorType::PAYPAL, $dto);
+        $service->processPayment(PaymentProcessorTypeEnum::PAYPAL, $dto);
         $this->assertTrue(true);
     }
 }

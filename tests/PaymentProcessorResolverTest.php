@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
-use App\Enum\PaymentProcessorType;
+use App\Enum\PaymentProcessorTypeEnum;
 use App\Exception\PaymentProcessorNotFoundException;
-use App\Service\Payment\PaymentAdapterInterface;
-use App\Service\Payment\PaymentProcessorResolver;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
+use App\Service\Payment\PaymentAdapterInterface;
+use App\Service\Payment\PaymentProcessorResolver;
 
 #[AllowMockObjectsWithoutExpectations]
 class PaymentProcessorResolverTest extends TestCase
@@ -20,16 +20,16 @@ class PaymentProcessorResolverTest extends TestCase
         $stripe = $this->createMock(PaymentAdapterInterface::class);
 
         $paypal->method('supports')
-            ->with(PaymentProcessorType::PAYPAL)
+            ->with(PaymentProcessorTypeEnum::PAYPAL)
             ->willReturn(true);
 
         $stripe->method('supports')
-            ->with(PaymentProcessorType::STRIPE)
+            ->with(PaymentProcessorTypeEnum::STRIPE)
             ->willReturn(false);
 
         $resolver = new PaymentProcessorResolver([$paypal, $stripe,]);
 
-        $result = $resolver->getProcessor(PaymentProcessorType::PAYPAL);
+        $result = $resolver->getProcessor(PaymentProcessorTypeEnum::PAYPAL);
 
         $this->assertSame($paypal, $result);
     }
@@ -45,6 +45,6 @@ class PaymentProcessorResolverTest extends TestCase
 
         $this->expectException(PaymentProcessorNotFoundException::class);
 
-        $resolver->getProcessor(PaymentProcessorType::STRIPE);
+        $resolver->getProcessor(PaymentProcessorTypeEnum::STRIPE);
     }
 }

@@ -2,12 +2,17 @@
 
 namespace App\Exception;
 
-use Exception;
+use Symfony\Component\HttpFoundation\Response;
 
-class CouponNotFoundException extends Exception
+class CouponNotFoundException extends ApiException
 {
-    public function __construct()
+    public function getErrorMessage(): string
     {
-        parent::__construct('coupon_not_found');
+        return 'Product not found';
+    }
+
+    public function getStatusCode(): int
+    {
+        return Response::HTTP_NOT_FOUND;
     }
 }
